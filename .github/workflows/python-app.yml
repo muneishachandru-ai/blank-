@@ -1,0 +1,19 @@
+import streamlit as st
+from manuscript_formatter import format_docx, docx_to_pdf
+
+st.title("AI Manuscript Formatter")
+
+uploaded = st.file_uploader("Upload Raw DOCX", type="docx")
+
+if uploaded:
+    with open("input.docx", "wb") as f:
+        f.write(uploaded.getbuffer())
+
+    format_docx("input.docx", "output.docx")
+    docx_to_pdf("output.docx", "output.pdf")
+
+    st.success("Formatting Completed!")
+
+    st.download_button("Download DOCX", open("output.docx", "rb"), "formatted.docx")
+    st.download_button("Download PDF", open("output.pdf", "rb"), "formatted.pdf")
+    
